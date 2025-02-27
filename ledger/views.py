@@ -1,140 +1,23 @@
 from django.shortcuts import render
+from django.views.generic import ListView
+from django.views.generic import DetailView
+from .models import Recipe
 
 # Create your views here.
-def recipe_list(request):
-    ctx = {
-        "recipes": [
-            {
-                "name": "Recipe 1",
-                "ingredients": [
-                    {
-                        "name": "tomato",
-                        "quantity": "3pcs"
-                    },
-                    {
-                        "name": "onion",
-                        "quantity": "1pc"
-                    },
-                    {
-                        "name": "pork",
-                        "quantity": "1kg"
-                    },
-                    {
-                        "name": "water",
-                        "quantity": "1L"
-                    },
-                    {
-                        "name": "sinigang mix",
-                        "quantity": "1 packet"
-                    }
-                ],
-                "link": "/recipe/1"
-            },
-            {
-                "name": "Recipe 2",
-                "ingredients": [
-                    {
-                        "name": "garlic",
-                        "quantity": "1 head"
-                    },
-                    {
-                        "name": "onion",
-                        "quantity": "1pc"
-                    },
-                    {
-                        "name": "vinegar",
-                        "quantity": "1/2cup"
-                    },
-                    {
-                        "name": "water",
-                        "quanity": "1 cup"
-                    },
-                    {
-                        "name": "salt",
-                        "quantity": "1 tablespoon"
-                    },
-                    {
-                        "name": "whole black peppers",
-                        "quantity": "1 tablespoon"
-                    },
-                    {
-                        "name": "pork",
-                        "quantity": "1 kilo"
-                    }
-                ],
-                "link": "/recipe/2"
-            }
-        ]
-    }
-        
 
+class MasterList(ListView):
+    model = Recipe 
+    template_name = 'master_list.html'
+
+class Solo(DetailView):
+    model = Recipe 
+    template_name = 'solo.html'
+
+def recipe_list(request):
+    recipes = Recipe.objects.all()
+    ctx = {'recipes': recipes}
     return render(request, "ledger/master_list.html", ctx)
 
-def recipe_1(request):
-    ctx = {
-        "name": "Recipe 1",
-        "ingredients": [
-            {
-                "name": "tomato",
-                "quantity": "3pcs"
-            },
-            {
-                "name": "onion",
-                "quantity": "1pc"
-            },
-            {
-                "name": "pork",
-                "quantity": "1kg"
-            },
-            {
-                "name": "water",
-                "quantity": "1L"
-            },
-            {
-                "name": "sinigang mix",
-                "quantity": "1 packet"
-            }
-        ],
-        "link": "/recipe/1"
-    }
-
-      
-    return render(request, "ledger/solo.html", ctx)
-
-def recipe_2(request):
-    ctx = {
-        "name": "Recipe 2",
-        "ingredients": [
-            {
-                "name": "garlic",
-                "quantity": "1 head"
-            },
-            {
-                "name": "onion",
-                "quantity": "1pc"
-            },
-            {
-                "name": "vinegar",
-                "quantity": "1/2cup"
-            },
-            {
-                "name": "water",
-                "quantity": "1 cup"
-            },
-            {
-                "name": "salt",
-                "quantity": "1 tablespoon"
-            },
-            {
-                "name": "whole black peppers",
-                "quantity": "1 tablespoon"
-            },
-            {
-                "name": "pork",
-                "quantity": "1 kilo"
-            }
-        ],
-        "link": "/recipe/2"
-    }
-
+def recipe_detail(request, pk):
+    ctx = {'recipe ': Recipe.objects.get(pk=pk)}
     return render(request, "ledger/solo.html", ctx)
