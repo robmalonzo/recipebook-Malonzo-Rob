@@ -1,23 +1,20 @@
-from django.shortcuts import render
-from django.views.generic import ListView
-from django.views.generic import DetailView
-from .models import Recipe
+from django.http import HttpResponse
+from django.views.generic import ListView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from . import models
 
 # Create your views here.
 
-class MasterList(ListView):
-    model = Recipe 
-    template_name = 'master_list.html'
 
-class Solo(DetailView):
-    model = Recipe 
-    template_name = 'solo.html'
+def index(request):
+    return HttpResponse("Landing page")
 
-def recipe_list(request):
-    recipes = Recipe.objects.all()
-    ctx = {'recipes': recipes}
-    return render(request, "ledger/master_list.html", ctx)
 
-def recipe_detail(request, pk):
-    ctx = {'recipe ': Recipe.objects.get(pk=pk)}
-    return render(request, "ledger/solo.html", ctx)
+class RecipeListView(ListView):
+    model = models.Recipe
+    template_name = 'recipes_list.html'
+
+
+class RecipeDetailView(LoginRequiredMixin, DetailView):
+    model = models.Recipe
+    template_name = 'recipes_view.html'

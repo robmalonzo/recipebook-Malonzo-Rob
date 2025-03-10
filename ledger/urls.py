@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import MasterList, Solo
-
-app_name = 'ledger'
+from .views import RecipeDetailView, RecipeListView, index
 
 urlpatterns = [
-    path('recipes/list/', MasterList.as_view() , name='master_list'), 
-    path('recipe/<int:pk>/', Solo.as_view(), name='recipe-detail'), 
+    path('', index, name='index'),
+    path('recipes/list', RecipeListView.as_view(), name='recipes_list'),
+    path('recipe/<int:pk>', RecipeDetailView.as_view(), name='recipe_detail')
 ]
+
+app_name = 'ledger'

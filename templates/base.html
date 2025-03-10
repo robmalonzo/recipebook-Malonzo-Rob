@@ -1,13 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Recipe Book{% endblock %}</title>
-</head>
-<body>
-
-    {% block content %}{% endblock %}
-
-</body>
+<html>
+    <head>
+        <meta charset="UTF-8" /> 
+        <meta name="viewport" content="width-device-width, initial-scale=1" />
+        <title>
+            {% block title %}Default Title{% endblock %}    
+        </title>
+        {% block styles %}{% endblock %}
+    </head>
+    <header>
+        <h2>Recipe Book
+            {% if request.user.is_authenticated %}
+                <form method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
+            {% else %}
+                <form method="POST" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <button type="submit">Login</button>
+                </form>
+            {% endif %}
+        </h2>
+    </header>
+    <body>
+        {% block content %}{% endblock %}
+    </body>
 </html>
