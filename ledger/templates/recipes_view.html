@@ -7,6 +7,16 @@
 {% endblock %}
 
 {% block content %}
+    <link href="{% static 'main.css' %}" rel="stylesheet">
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">
+            Submit
+        </button>
+    </form>
+
     <h3>
         {{ recipe.name }}
     </h3>
@@ -33,5 +43,7 @@
             <li> Last updated {{ recipe.updated_on }} </li>
         </ul>
     </h6>
-    
+    {% if object.task_image %}
+    <img src="{{ task.task_image.url }}" alt="">
+    {% endif %}
 {% endblock %}
