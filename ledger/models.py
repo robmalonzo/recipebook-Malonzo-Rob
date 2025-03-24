@@ -40,3 +40,19 @@ class RecipeIngredient(models.Model):
         on_delete=models.CASCADE,
         related_name='ingredients'
     )
+
+
+class RecipeImage(models.Model):
+    recipe = models.ForeignKey(
+        Recipe, 
+        on_delete=models.CASCADE, 
+        related_name="images"
+    )
+    image = models.ImageField(upload_to="recipe_images/")
+    description = models.CharField(max_length=255, blank=False)
+
+    def __str__(self):
+        return f"Image for {self.recipe.name}"
+
+    def get_absolute_url(self):
+        return reverse('ledger:recipe_detail', args=[str(self.recipe.pk)])
