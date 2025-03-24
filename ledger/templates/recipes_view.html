@@ -7,19 +7,19 @@
 {% endblock %}
 
 {% block content %}
-    <link href="{% static 'main.css' %}" rel="stylesheet">
-
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit">
-            Submit
-        </button>
-    </form>
-
     <h3>
         {{ recipe.name }}
     </h3>
+    {% for image in recipe.images.all %}
+        <img src="{{ image.recipe_image.url }}", alt="{{ image.description }}", width="400">
+    {% empty %}
+        <p>No images submitted</p>
+    {% endfor %}
+    <h4>
+        <ul>
+            <li><a href="{% url 'ledger:recipe_add_image' recipe.pk %}">Add Recipe Image</a></li>
+        </ul>
+    </h4>
     <h3>
         <em>Author - {{ recipe.author }}</em>
     </h3>
@@ -43,7 +43,5 @@
             <li> Last updated {{ recipe.updated_on }} </li>
         </ul>
     </h6>
-    {% if object.task_image %}
-    <img src="{{ task.task_image.url }}" alt="">
-    {% endif %}
+    
 {% endblock %}

@@ -48,6 +48,5 @@ class RecipeImage(models.Model):
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
-        related_name='image'
+        related_name='images'
     )
-    

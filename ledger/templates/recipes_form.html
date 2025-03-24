@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+Add Recipe
+{% endblock %}
+
+{% block content %}
+<h2>
+    Create a New Recipe
+</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Recipe</button>
+</form>
+
+<h4>
+    <ul><li>
+        <a href="../recipes/list"> Go back to Recipe Book</a>
+    </ul></li>
+</h4>
+{% endblock %}
