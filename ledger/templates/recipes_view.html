@@ -11,7 +11,7 @@
         {{ recipe.name }}
     </h3>
     {% for image in recipe.images.all %}
-        <img src="{{ image.recipe_image.url }}", alt="{{ image.description }}", width="400">
+        <img src="{{ image.recipe_image.url }}", alt="{{ image.description }}", width="500">
     {% empty %}
         <p>No images submitted</p>
     {% endfor %}
